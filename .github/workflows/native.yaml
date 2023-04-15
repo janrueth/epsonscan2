@@ -1,0 +1,18 @@
+on: [push, pull_request]
+
+jobs:
+  build_job:
+    # The host should always be linux
+    runs-on: ubuntu-latest
+    name: Build on x86_64 
+
+    steps:
+      # Checkout the repo to $PWD
+      - uses: actions/checkout@v3
+      # Build a docker image to build the stuff
+      - name: Build
+        run: make docker-all
+      - uses: actions/upload-artifact@v3
+        with:
+          name: packages-x86_64
+          path: artifacts/*.deb
