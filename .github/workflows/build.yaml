@@ -32,7 +32,7 @@ jobs:
             artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
 
           # The shell to run commands with in the container
-          shell: /bin/sh
+          shell: /bin/bash
 
           # Install epsonscan2 dependencies so that they are cached
           install: |
