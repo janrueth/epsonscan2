@@ -1,0 +1,41 @@
+diff --git a/src/SaneWrapper/backend.cpp b/src/SaneWrapper/backend.cpp
+index fd839da..cacc83c 100644
+--- a/src/SaneWrapper/backend.cpp
++++ b/src/SaneWrapper/backend.cpp
+@@ -544,8 +544,8 @@ bool handle_scan_area (Epson_Scanner *s, double* current_pixel_x, double* curren
+     *current_pixel_x = calculate_pixel_size(base_res, 148);
+     *current_pixel_y = calculate_pixel_size(base_res, 100);
+   }else if(s->hw->sv->device_data.ScanArea.FixedSize == PlasticCard){
+-    *current_pixel_x = calculate_pixel_size(base_res, 85.6);
+-    *current_pixel_y = calculate_pixel_size(base_res, 54);
++    *current_pixel_x = calculate_pixel_size(base_res, 54);
++    *current_pixel_y = calculate_pixel_size(base_res, 85.6);
+   }else if(s->hw->sv->device_data.ScanArea.FixedSize == Tabloid){
+     *current_pixel_x = calculate_pixel_size(base_res, 279);
+     *current_pixel_y = calculate_pixel_size(base_res, 432);
+diff --git a/src/Standalone/commandlinemode.cpp b/src/Standalone/commandlinemode.cpp
+index 24a7215..969ffbe 100644
+--- a/src/Standalone/commandlinemode.cpp
++++ b/src/Standalone/commandlinemode.cpp
+@@ -426,8 +426,8 @@ void CommandLineMode::ScanStart(const char* target_device, const char* settings_
+     if(sv->device_data.ScanArea.FixedSize != Manual){
+         this->UpdateScanArea(sv->device_data.ScanArea, sv->device_data.Resolution.select);
+     }else {
+-        sv->device_data.ScanArea.ScanAreaWidth.select = sv->device_data.ScanArea.ScanAreaWidth.select / 100 * sv->device_data.Resolution.select;
+-        sv->device_data.ScanArea.ScanAreaHeight.select = sv->device_data.ScanArea.ScanAreaHeight.select / 100 * sv->device_data.Resolution.select;
++        sv->device_data.ScanArea.ScanAreaWidth.select = (double)sv->device_data.ScanArea.ScanAreaWidth.select / 100 * sv->device_data.Resolution.select;
++        sv->device_data.ScanArea.ScanAreaHeight.select = (double)sv->device_data.ScanArea.ScanAreaHeight.select / 100 * sv->device_data.Resolution.select;
+     }
+ 
+     //scanning roop
+@@ -810,8 +810,8 @@ void CommandLineMode::UpdateScanArea(SCAN_AREA_VALUE& scan_area_parameter, int r
+         scan_area_parameter.ScanAreaWidth.select = calculate_pixel_size(148, resolution);
+         scan_area_parameter.ScanAreaHeight.select = calculate_pixel_size(100, resolution);
+     }else if(scan_area_parameter.FixedSize == PlasticCard){
+-        scan_area_parameter.ScanAreaWidth.select = calculate_pixel_size(85.6, resolution);
+-        scan_area_parameter.ScanAreaHeight.select = calculate_pixel_size(54, resolution);
++        scan_area_parameter.ScanAreaWidth.select = calculate_pixel_size(54, resolution);
++        scan_area_parameter.ScanAreaHeight.select = calculate_pixel_size(85.6, resolution);
+     }else if(scan_area_parameter.FixedSize == PlasticCard_Landscape){
+         scan_area_parameter.ScanAreaWidth.select = calculate_pixel_size(85.6, resolution);
+         scan_area_parameter.ScanAreaHeight.select = calculate_pixel_size(54, resolution);
