@@ -1,0 +1,43 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a9daee7..7c6f40a 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -111,19 +111,25 @@ add_subdirectory(src)
+ 
+ ######## install settings #########
+ 
+-install(DIRECTORY Resources DESTINATION ${EPSON_INSTALL_ROOT}${EPSON_INSTALL_PATH})
++install(DIRECTORY Resources DESTINATION ${EPSON_INSTALL_PATH})
+ 
+-install(FILES epsonscan2.rules DESTINATION ${EPSON_INSTALL_ROOT}/lib/udev/rules.d/ RENAME 60-epsonscan2.rules)
+-install(FILES epsonscan2 DESTINATION ${EPSON_INSTALL_ROOT}/etc/sane.d/dll.d)
+-install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_FULL_LIBDIR}/sane/)")
+-install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ../epsonscan2/libsane-epsonscan2.so ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_FULL_LIBDIR}/sane/libsane-epsonscan2.so.1)")
+-install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ../epsonscan2/libsane-epsonscan2.so ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_FULL_LIBDIR}/sane/libsane-epsonscan2.so.1.0.0)")
++install(FILES epsonscan2.rules DESTINATION /lib/udev/rules.d/ RENAME 60-epsonscan2.rules)
++install(FILES epsonscan2 DESTINATION /etc/sane.d/dll.d)
++install(CODE "
++    include(GNUInstallDirs)
++    include(CPack)
+ 
+-install(FILES changelog.Debian DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++    execute_process(COMMAND \${CMAKE_COMMAND} -E make_directory \$ENV{DESTDIR}\${CMAKE_INSTALL_FULL_LIBDIR}/sane/)
++    execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink ../epsonscan2/libsane-epsonscan2.so \$ENV{DESTDIR}\${CMAKE_INSTALL_FULL_LIBDIR}/sane/libsane-epsonscan2.so.1)
++    execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink ../epsonscan2/libsane-epsonscan2.so \$ENV{DESTDIR}\${CMAKE_INSTALL_FULL_LIBDIR}/sane/libsane-epsonscan2.so.1.0.0)"
++)
++install(FILES changelog.Debian DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+ 
+-install(FILES NEWS DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+-install(FILES AUTHORS DESTINATION  ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+-install(FILES README DESTINATION  ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+-install(FILES COPYING DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+-install(FILES LICENSE DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++install(FILES NEWS DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++install(FILES AUTHORS DESTINATION  ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++install(FILES README DESTINATION  ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++install(FILES COPYING DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
++install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
+ 
++
++include(CPack)
+\ No newline at end of file

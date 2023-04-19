@@ -17,14 +17,6 @@ index a9daee7..a0936c3 100755
 +
  set (CMAKE_INSTALL_PREFIX "/usr")
  cmake_minimum_required (VERSION 2.8.12.2)
- 
-@@ -127,3 +134,5 @@ install(FILES README DESTINATION  ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/s
- install(FILES COPYING DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
- install(FILES LICENSE DESTINATION ${EPSON_INSTALL_ROOT}${CMAKE_INSTALL_PREFIX}/share/doc/epsonscan2${EPSON_VERSION})
- 
-+
-+include(CPack)
-\ No newline at end of file
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index c884d83..73958e7 100644
 --- a/src/CMakeLists.txt
