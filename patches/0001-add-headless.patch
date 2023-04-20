@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a9daee7..a0936c3 100755
+index 7c6f40a..cdedef1 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -16,7 +16,14 @@
@@ -17,6 +17,7 @@ index a9daee7..a0936c3 100755
 +
  set (CMAKE_INSTALL_PREFIX "/usr")
  cmake_minimum_required (VERSION 2.8.12.2)
+ 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index c884d83..73958e7 100644
 --- a/src/CMakeLists.txt

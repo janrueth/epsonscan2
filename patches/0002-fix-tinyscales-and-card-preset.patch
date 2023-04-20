@@ -13,6 +13,58 @@ index fd839da..cacc83c 100644
    }else if(s->hw->sv->device_data.ScanArea.FixedSize == Tabloid){
      *current_pixel_x = calculate_pixel_size(base_res, 279);
      *current_pixel_y = calculate_pixel_size(base_res, 432);
+diff --git a/src/SaneWrapper/epsonscan.cpp b/src/SaneWrapper/epsonscan.cpp
+index c349626..772b3f6 100644
+--- a/src/SaneWrapper/epsonscan.cpp
++++ b/src/SaneWrapper/epsonscan.cpp
+@@ -1302,6 +1302,8 @@ select_current_doc_size(Epson_Scanner * s, SCANPARA device_data)
+     s->hw->cur_doc_size = DOC_POSTCARD_L_STR;
+   }else if(device_data.ScanArea.FixedSize == PlasticCard){
+     s->hw->cur_doc_size = DOC_PLASTICCARD_STR;
++  }else if(device_data.ScanArea.FixedSize == PlasticCard_Landscape){
++    s->hw->cur_doc_size = DOC_PLASTICCARD_L_STR;
+   }else if(device_data.ScanArea.FixedSize == Tabloid){
+     s->hw->cur_doc_size = DOC_TABLOID_STR;
+   }else if(device_data.ScanArea.FixedSize == Maximum_Size){
+@@ -1357,6 +1359,8 @@ set_fixed_size(Epson_Scanner * s, SANE_String value)
+     s->hw->sv->device_data.ScanArea.FixedSize = Postcard_Landscape;
+   }else if(strcmp(value, DOC_PLASTICCARD_STR) == 0){
+     s->hw->sv->device_data.ScanArea.FixedSize = PlasticCard;
++  }else if(strcmp(value, DOC_PLASTICCARD_L_STR) == 0){
++    s->hw->sv->device_data.ScanArea.FixedSize = PlasticCard_Landscape;
+   }else if(strcmp(value, DOC_TABLOID_STR) == 0){
+     s->hw->sv->device_data.ScanArea.FixedSize = Tabloid;
+   }else if(strcmp(value, DOC_MAXIMUM_STR) == 0){
+@@ -1505,13 +1509,13 @@ create_document_size_list (device *dev)
+ 
+   if(min_x_inchi <= 2.1 && 2.1 <= max_x_inchi){
+     if(min_y_inchi <= 3.4 && 3.4 <= max_y_inchi){
+-      //dev->document_size[item_num++] = DOC_PLASTICCARD_STR;
++      dev->document_size[item_num++] = DOC_PLASTICCARD_STR;
+     }
+   }
+ 
+   if(min_x_inchi <= 3.4 && 3.4 <= max_x_inchi){
+     if(min_y_inchi <= 2.1 && 2.1 <= max_y_inchi){
+-      dev->document_size[item_num++] = DOC_PLASTICCARD_STR;
++      dev->document_size[item_num++] = DOC_PLASTICCARD_L_STR;
+     }
+   }
+ 
+@@ -1965,10 +1969,10 @@ handle_scan_area (Epson_Scanner *s, SANE_String value)
+   }else if(strcmp(value, DOC_POSTCARD_L_STR) == 0){
+     current_pixel_x = calculate_pixel_size(base_res, 148);
+     current_pixel_y = calculate_pixel_size(base_res, 100);
+-  /*}else if(strcmp(value, DOC_PLASTICCARD_STR) == 0){
+-    current_pixel_x = calculate_pixel_size(base_res, 54);
+-    current_pixel_y = calculate_pixel_size(base_res, 85.6);*/
+   }else if(strcmp(value, DOC_PLASTICCARD_STR) == 0){
++    current_pixel_x = calculate_pixel_size(base_res, 54);
++    current_pixel_y = calculate_pixel_size(base_res, 85.6);
++  }else if(strcmp(value, DOC_PLASTICCARD_L_STR) == 0){
+     current_pixel_x = calculate_pixel_size(base_res, 85.6);
+     current_pixel_y = calculate_pixel_size(base_res, 54);
+   }else if(strcmp(value, DOC_TABLOID_STR) == 0){
 diff --git a/src/Standalone/commandlinemode.cpp b/src/Standalone/commandlinemode.cpp
 index 24a7215..969ffbe 100644
 --- a/src/Standalone/commandlinemode.cpp
